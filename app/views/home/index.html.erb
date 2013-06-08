@@ -5,10 +5,7 @@
     <p><small>current usage</small></p>
   </div>
 
-  <div class="pull-right alert alert-error">
-    <h2><%= estimated_usage @vnstats[:raw_months]%></h2>
-    <p><small>estimated end of month usage</small></p>
-  </div>
+  <%= estimated_usage @vnstats %>
 </div>
 
 <!-- daily use graph -->

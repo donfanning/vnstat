@@ -7,7 +7,6 @@ class GraphController < ApplicationController
 
   def daily_use
     raw_data = @vnstats[:days]
-    Rails.logger.debug("vnstats: #{@vnstats[:days].inspect}")
     graph_cols = [['Day', 'Received', 'Transmitted']]
     graph_data = raw_data.collect do |r|
       f = r.split(';')
@@ -17,9 +16,7 @@ class GraphController < ApplicationController
 
     render :json => {
       :type => 'AreaChart',
-
       :data => graph_cols + graph_data.reverse,
-
       :options => {
         :hAxis => { :title => 'Day', :textStyle => { :fontSize => 10 } },
         :vAxis => { :title => 'MiB'},
@@ -40,9 +37,7 @@ class GraphController < ApplicationController
 
     render :json => {
       :type => 'AreaChart',
-
       :data => graph_cols + graph_data.reverse,
-
       :options => {
         :hAxis => { :title => 'Month' },
         :vAxis => { :title => 'GiB'},

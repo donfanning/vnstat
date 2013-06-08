@@ -15,7 +15,14 @@ module HomeHelper
     oneline.split(';')[10] if !oneline.nil?
   end
 
-  def estimated_usage raw_months
-    raw_months.lines.last.split('|')[2] if !raw_months.nil?
+  def estimated_usage vnstats
+    if !vnstats.empty?
+      content_tag :div, :class => "pull-right alert alert-#{vnstats[:estimated_monthly_status]}" do
+        [
+          content_tag(:h2, vnstats[:estimated_monthly_usage]), 
+          "<p><small>estimated end of month usage</small></p>"
+        ].join("").html_safe
+      end
+    end
   end
 end

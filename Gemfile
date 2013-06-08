@@ -37,5 +37,5 @@ gem "font-awesome-rails"
 # Deploy with Capistrano
 # gem 'capistrano'
 
-# To use debugger
-gem 'debugger'
+gem "better_errors", ">= 0.7.2", :group => :development
+gem "binding_of_caller", ">= 0.7.1", :group => :development
