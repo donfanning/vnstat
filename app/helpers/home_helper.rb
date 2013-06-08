@@ -11,13 +11,11 @@ module HomeHelper
     end
   end
 
-  def current_usage
-    v=`vnstat -i eth0 --oneline`
-    mtu=v.split(';')[10] if !v.nil?
+  def current_usage oneline
+    oneline.split(';')[10] if !oneline.nil?
   end
 
-  def estimated_usage
-    v=`vnstat -i eth0 -m`
-    mtu=v.lines.last.split('|')[2] if !v.nil?
+  def estimated_usage raw_months
+    raw_months.lines.last.split('|')[2] if !raw_months.nil?
   end
 end
