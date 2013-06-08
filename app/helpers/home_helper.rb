@@ -11,13 +11,18 @@ module HomeHelper
     end
   end
 
-  def current_usage
-    v=`vnstat -i eth0 --oneline`
-    mtu=v.split(';')[10]
+  def current_usage oneline
+    oneline.split(';')[10] if !oneline.nil?
   end
 
-  def estimated_usage
-    v=`vnstat -i eth0 -m`.lines.last
-    mtu=v.split('|')[2]
+  def estimated_usage vnstats
+    if !vnstats.empty?
+      content_tag :div, :class => "pull-right alert alert-#{vnstats[:estimated_monthly_status]}" do
+        [
+          content_tag(:h2, vnstats[:estimated_monthly_usage]), 
+          "<p><small>estimated end of month usage</small></p>"
+        ].join("").html_safe
+      end
+    end
   end
 end

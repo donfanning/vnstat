@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Vnstat</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <title>vnstat</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= stylesheet_link_tag "bootstrap-responsive", :media => "screen" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
-  <div class="container-fluid">
-    <%= yield %>
-  </div>
-</body>
+  <body class="<%= controller_name %> <%= action_name %>">
+    <div id="main" role="main">
+      <div class="container-fluid">
+        <div id="flash-msgs" class="row-fluid">
+            <%= render 'layouts/messages' %>
+        </div>
+        <%= yield %>
+        <footer>
+        </footer>
+      </div> 
+     </div> 
+  </body>
 </html>

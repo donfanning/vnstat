@@ -8,10 +8,14 @@
 }
 
 .current-usage {
-  font-size: 20em;
-  display: block;
+  font-size: 8em;
+  line-height:1em;
 }
 
 .estimated-usage {
   font-size: 4em;
+}
+
+div#main {
+  padding-top: 1em;
 }

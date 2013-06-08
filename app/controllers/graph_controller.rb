@@ -1,22 +1,25 @@
 class GraphController < ApplicationController
-  def daily_use
-    raw_data = `vnstat --dumpdb | awk -F';' '{ if ($1 == "d" && $8 == 1) print $0; }'`.lines
+  before_filter :load_vnstats
 
+  def load_vnstats
+    @vnstats = fetch_vnstats('eth0')
+  end
+
+  def daily_use
+    raw_data = @vnstats[:days]
     graph_cols = [['Day', 'Received', 'Transmitted']]
     graph_data = raw_data.collect do |r|
       f = r.split(';')
       df = Time.at(f[2].to_i).strftime('%m/%e').sub(' ', '').sub(/^0/, '')
-      [ "#{df}", f[3].to_i / 1024.0, f[4].to_i / 1024.0 ]
+      [ "#{df}", f[3].to_i, f[4].to_i ]
     end
 
     render :json => {
       :type => 'AreaChart',
-
       :data => graph_cols + graph_data.reverse,
-
       :options => {
         :hAxis => { :title => 'Day', :textStyle => { :fontSize => 10 } },
-        :vAxis => { :title => 'GiB'},
+        :vAxis => { :title => 'MiB'},
         :isStacked => true,
         :title => 'Daily Usage',
       }
@@ -24,8 +27,7 @@ class GraphController < ApplicationController
   end
 
   def monthly_use
-    raw_data = `vnstat --dumpdb | awk -F';' '{ if ($1 == "m" && $8 == 1) print $0; }'`.lines
-
+    raw_data = @vnstats[:months]
     graph_cols = [['Month', 'Received', 'Transmitted']]
     graph_data = raw_data.collect do |r|
       f = r.split(';')
@@ -35,9 +37,7 @@ class GraphController < ApplicationController
 
     render :json => {
       :type => 'AreaChart',
-
       :data => graph_cols + graph_data.reverse,
-
       :options => {
         :hAxis => { :title => 'Month' },
         :vAxis => { :title => 'GiB'},
