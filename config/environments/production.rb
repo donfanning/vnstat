@@ -15,7 +15,8 @@ Vnstat::Application.configure do
   config.assets.compress = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = false
+  # 6/11/13 mjf only way to get it to work in production?
+  config.assets.compile = true
 
   # Generate digests for assets URLs
   config.assets.digest = true

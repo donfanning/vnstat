@@ -11,9 +11,7 @@ jQuery(function ($) {
           $.getJSON(div.data('chart'), function (data) {
             // Create DataTable from received chart data
             var table = new google.visualization.arrayToDataTable(data.data);
-/*            $.each(data.cols, function () { table.addColumn.apply(table, this); });
-            table.addRows(data.rows);
-*/            
+
             // Draw the chart
             var chart = new google.visualization.ChartWrapper();
             chart.setChartType(data.type);
@@ -22,6 +20,11 @@ jQuery(function ($) {
             chart.setOption('width', div.width());
             chart.setOption('height', div.height());
             chart.draw(div.get(0));
+
+            // hookup the orientationchange to redraw it
+            window.addEventListener('orientationchange', function () {
+              chart.draw(div.get(0));
+            });
           });
         });
       }});
