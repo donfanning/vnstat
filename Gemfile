@@ -39,6 +39,9 @@ gem "font-awesome-rails"
 
 gem "better_errors", ">= 0.7.2", :group => :development
 gem "binding_of_caller", ">= 0.7.1", :group => :development
+gem 'quiet_assets', group: :development   # quieter logging
+gem 'thin', group: :development           # quieter log than webrick
+gem "capistrano", group: :development     # deployment
 
 gem "memcache-client"
 

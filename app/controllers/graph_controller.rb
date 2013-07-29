@@ -2,7 +2,9 @@ class GraphController < ApplicationController
   before_filter :load_vnstats
 
   def load_vnstats
-    @vnstats = fetch_vnstats('eth0')
+    @device = params[:dev]
+    @device ||= "eth0"
+    @vnstats = fetch_vnstats(@device)
   end
 
   def daily_use

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   CRITICAL_USAGE_GB = 95
 
   def fetch_vnstats (device)
-    Rails.cache.fetch(device, :expires_in => 1.minute) do 
+    Rails.cache.fetch(device, :expires_in => 2.minutes) do 
       Rails.logger.debug('running vnstat')
       vnstat = {}
 
