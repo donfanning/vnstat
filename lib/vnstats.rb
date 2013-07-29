@@ -27,6 +27,8 @@ module Vnstats
             vnstat[:device] = f[1].strip
           when 'nick'
             vnstat[:nick] = f[1].strip
+            # see if we have application config to supercede this
+            vnstat[:nick] = ENV[device] if ENV.has_key?(device)
           end
         end
 
