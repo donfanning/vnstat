@@ -1,6 +1,6 @@
 module Vnstats
-  WARNING_USAGE_GB = 80
-  CRITICAL_USAGE_GB = 95
+  WARNING_USAGE_GB = (ENV["WARNING_USAGE_GB"].nil? ? 80 : ENV["WARNING_USAGE_GB"].to_i)
+  CRITICAL_USAGE_GB = (ENV["CRITICAL_USAGE_GB"].nil? ? 95 : ENV["CRITICAL_USAGE_GB"].to_i)
 
   def fetch_vnstats (device)
     Rails.cache.fetch(device, :expires_in => 5.minutes) do 
