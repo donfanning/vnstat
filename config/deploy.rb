@@ -26,8 +26,8 @@ default_run_options[:pty] = true
 
 # if you want to clean up old releases on each deploy uncomment this:
 after "deploy:restart", "deploy:cleanup"
+after "deploy:assets:symlink", "custom:config"
 
-after "deploy:update_code", "custom:config"
 # move migrate to production one since we dont want to run this when updating the kiosks
 #after "deploy:update_code", "deploy:migrate"
 
