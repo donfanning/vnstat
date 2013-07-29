@@ -24,9 +24,9 @@ module Vnstats
           when 'd'
             vnstat[:days] << r if f[7].strip == "1"
           when 'interface'
-            vnstat[:device] = f[1]
+            vnstat[:device] = f[1].strip
           when 'nick'
-            vnstat[:nick] = f[1]
+            vnstat[:nick] = f[1].strip
           end
         end
 
