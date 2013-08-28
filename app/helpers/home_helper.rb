@@ -11,13 +11,20 @@ module HomeHelper
     end
   end
 
-  def current_usage oneline
-    oneline.split(';')[10] if !oneline.nil?
+  def current_usage oneline, device
+    if !oneline.nil?
+      content_tag :div, :class => "alert alert-warning center" do
+        [
+          content_tag(:h2, oneline.split(';')[10]), 
+          "<p><small>approximate usage so far for #{AVAILABLE_DEVICES[device.to_sym]}</small></p>"
+        ].join("").html_safe
+      end
+    end
   end
 
   def daily_history history
     results = []
-    results << "<table id='daily-history' class='table table-condensed table-striped'>
+    results << "<table id='daily-history' class='table table-condensed table-striped table-bordered'>
       <thead>
         <tr>
           <th>Date</th>
@@ -31,9 +38,9 @@ module HomeHelper
       df = Time.at(d[2].to_i).strftime('%m/%e').sub(' ', '').sub(/^0/, '')
       "<tr>
         <td>#{df}</td>
-        <td>#{d[3]}</td>
-        <td>#{d[4]}</td>
-        <td>#{d[3].to_i + d[4].to_i}</td>
+        <td>#{number_with_delimiter(d[3].to_i, delimiter: ',')}</td>
+        <td>#{number_with_delimiter(d[4].to_i, delimiter: ',')}</td>
+        <td>#{number_with_delimiter(d[3].to_i + d[4].to_i, delimiter: ',')}</td>
       </tr>"
     end
     results << "</tbody></table>"
@@ -45,7 +52,7 @@ module HomeHelper
       content_tag :div, :class => "alert alert-info days-usage center" do
         [
           content_tag(:h2, oneline.split(';')[5]), 
-          "<p><small>approximate usage today<small></p>"
+          "<p><small>approximate usage today</small></p>"
         ].join("").html_safe
       end
     end
@@ -53,7 +60,7 @@ module HomeHelper
 
   def estimated_usage vnstats
     if !vnstats.empty?
-      content_tag :div, :class => "pull-right alert alert-#{vnstats[:estimated_monthly_status]}" do
+      content_tag :div, :class => "alert alert-#{vnstats[:estimated_monthly_status]} center" do
         [
           content_tag(:h2, vnstats[:estimated_monthly_usage]), 
           "<p><small>estimated end of month usage</small></p>"
@@ -64,7 +71,7 @@ module HomeHelper
 
   def monthly_history history
     results = []
-    results << "<table id='monthly-history' class='table table-condensed table-striped'>
+    results << "<table id='monthly-history' class='table table-condensed table-striped table-bordered'>
       <thead>
         <tr>
           <th>Month</th>

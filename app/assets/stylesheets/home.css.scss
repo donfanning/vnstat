@@ -5,15 +5,19 @@
 .center {
   text-align: center;
   margin: auto;
+
+  table {
+    margin: auto;
+  }
 }
 
 .current-usage {
-  font-size: 4em;
+  font-size: 2em;
   line-height:1em;
 }
 
 .estimated-usage {
-  font-size: 4em;
+  font-size: 2em;
 }
 
 div#main {
@@ -22,15 +26,6 @@ div#main {
 
 h1, h2 { 
 	margin-bottom: 1px;
-}
-
-pre {
-	font-size: 8pt;
-	line-height: 9pt;
-}
-
-.days-usage {
-
 }
 
 #daily-history.table, #monthly-history.table {
