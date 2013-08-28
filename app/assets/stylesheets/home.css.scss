@@ -33,9 +33,14 @@ h1, h2 {
   }
 }
 
-.usage h1, .usage h2{
-  font-size: 1.75em;
-  line-height: 1.8em;
+.usage h1, .usage h2 {
+  font-size: 1.5em;
+  line-height: 1.5em;
+}
+
+.usage {
+  font-size: .8em;
+  line-height: .8em;
 }
 
 .history {
