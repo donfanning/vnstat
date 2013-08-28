@@ -12,12 +12,10 @@
 }
 
 .current-usage {
-  font-size: 2em;
   line-height:1em;
 }
 
 .estimated-usage {
-  font-size: 2em;
 }
 
 div#main {
@@ -33,4 +31,16 @@ h1, h2 {
   td, th {
     text-align:right;
   }
+}
+
+.usage h1, .usage h2{
+  font-size: 1.75em;
+}
+
+.history {
+  font-size: .8em;
+}
+
+.btn-group {
+  margin-top: .25em;
 }
