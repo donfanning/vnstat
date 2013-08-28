@@ -10,7 +10,9 @@
     <%= estimated_usage @vnstats %>
   </div>
 </div>
-<div class="row-fluid">
+
+<div class="clearfix"></div>
+<div class="row-fluid devices">
   <% if AVAILABLE_DEVICES.size > 1 %>
     <div class="btn-group span12">
       <% AVAILABLE_DEVICES.each do |k, v| %>
@@ -39,10 +41,12 @@
 
 <!-- details -->
 <div class="row-fluid history">
-  <div class="span6 center">
+  <div class="span12 center">
     <%= daily_history @vnstats[:days] %>
   </div>
-  <div class="span6 center">
+</div>
+<div class="row-fluid history">
+  <div class="span12 center">
     <%= monthly_history @vnstats[:months] %>
   </div>
 </div>
