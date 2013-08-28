@@ -1,19 +1,24 @@
-<!-- used / estimated -->
-<div class="row-fluid">
-  <div class="hero-unitx pull-left">
+
+<div class="row-fluid span12">
+  <div class="span4">
     <h1 class="current-usage"><%= current_usage @vnstats[:oneline]%></h1>
     <p><small>current usage <%= "for " + AVAILABLE_DEVICES[@device.to_sym] if AVAILABLE_DEVICES.has_key?(@device.to_sym) %></small></p>
   </div>
-
+  <div class="span4">
+    <%= days_usage @vnstats[:oneline] %>
+  </div>
+  <div class="span4">
+    <%= estimated_usage @vnstats %>
+  </div>
+</div>
+<div class="row-fluid span12">
   <% if AVAILABLE_DEVICES.size > 1 %>
-    <div class="btn-group pull-left">
+    <div class="btn-group span12">
       <% AVAILABLE_DEVICES.each do |k, v| %>
         <%= link_to v, root_path(dev: k), class: "btn btn-mini btn-default" %>
       <% end %>
     </div>
   <% end %>
-
-  <%= estimated_usage @vnstats %>
 </div>
 
 <!-- daily use graph -->
@@ -31,14 +36,6 @@
 </div>
 
 <!-- details -->
-<div class="row-fluid">
-  <pre>
-    <%= @vnstats[:raw_days] %>
-  </pre>
-</div>
+<%= daily_history @vnstats[:days] %>
 
-<div class="row-fluid">
-  <pre>
-    <%= @vnstats[:raw_months] %>
-  </pre>
-</div>
+<%= monthly_history @vnstats[:months] %>

@@ -28,3 +28,14 @@ pre {
 	font-size: 8pt;
 	line-height: 9pt;
 }
+
+.days-usage {
+
+}
+
+#daily-history.table, #monthly-history.table {
+  width: auto;
+  td, th {
+    text-align:right;
+  }
+}

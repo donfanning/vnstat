@@ -15,6 +15,42 @@ module HomeHelper
     oneline.split(';')[10] if !oneline.nil?
   end
 
+  def daily_history history
+    results = []
+    results << "<table id='daily-history' class='table table-condensed table-striped'>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Rec MiB</th>
+          <th>Trn Mib</th>
+          <th>Tot MiB</th>
+        </tr>
+      </thead>
+        <tbody>"
+    results += history.collect do |d|
+      df = Time.at(d[2].to_i).strftime('%m/%e').sub(' ', '').sub(/^0/, '')
+      "<tr>
+        <td>#{df}</td>
+        <td>#{d[3]}</td>
+        <td>#{d[4]}</td>
+        <td>#{d[3].to_i + d[4].to_i}</td>
+      </tr>"
+    end
+    results << "</tbody></table>"
+    results.join("").html_safe
+  end
+
+  def days_usage oneline
+    if !oneline.nil?
+      content_tag :div, :class => "alert alert-info days-usage center" do
+        [
+          content_tag(:h2, oneline.split(';')[5]), 
+          "<p><small>approximate usage today<small></p>"
+        ].join("").html_safe
+      end
+    end
+  end
+
   def estimated_usage vnstats
     if !vnstats.empty?
       content_tag :div, :class => "pull-right alert alert-#{vnstats[:estimated_monthly_status]}" do
@@ -25,4 +61,30 @@ module HomeHelper
       end
     end
   end
+
+  def monthly_history history
+    results = []
+    results << "<table id='monthly-history' class='table table-condensed table-striped'>
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th>Rec GiB</th>
+          <th>Trn Gib</th>
+          <th>Tot GiB</th>
+        </tr>
+      </thead>
+        <tbody>"
+    results += history.collect do |d|
+      df = Time.at(d[2].to_i).strftime("%b '%y")
+      "<tr>
+        <td>#{df}</td>
+        <td>#{number_with_precision(d[3].to_i / 1024.0, precision: 2)}</td>
+        <td>#{number_with_precision(d[4].to_i / 1024.0, precision: 2)}</td>
+        <td>#{number_with_precision((d[3].to_i + d[4].to_i) / 1024.0, precision: 2)}</td>
+      </tr>"
+    end
+    results << "</tbody></table>"
+    results.join("").html_safe
+  end
+
 end

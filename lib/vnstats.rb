@@ -20,9 +20,9 @@ module Vnstats
           f = r.split(';')
           case f[0]
           when 'm'
-            vnstat[:months] << r if f[7].strip == "1"
+            vnstat[:months] << f if f[7].strip == "1"
           when 'd'
-            vnstat[:days] << r if f[7].strip == "1"
+            vnstat[:days] << f if f[7].strip == "1"
           when 'interface'
             vnstat[:device] = f[1].strip
           when 'nick'
