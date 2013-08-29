@@ -1,7 +1,7 @@
 module HomeHelper
   def chart_tag (action, params = {})
     params[:format] ||= :json
-    params[:height] ||= '300'
+    params[:height] ||= '350'
 
     path = graph_path(action, params)
     content_tag(:div, :'data-chart' => path, :style => "height: #{params[:height]}px;") do

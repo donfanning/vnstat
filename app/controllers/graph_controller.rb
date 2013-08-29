@@ -22,6 +22,7 @@ class GraphController < ApplicationController
         :hAxis => { :title => 'Day', :textStyle => { :fontSize => 10 } },
         :vAxis => { :title => 'MiB'},
         :isStacked => true,
+        :legend => 'bottom',
         :title => 'Daily Usage',
       }
     }
@@ -42,6 +43,7 @@ class GraphController < ApplicationController
         :hAxis => { :title => 'Month' },
         :vAxis => { :title => 'GiB'},
         :isStacked => true,
+        :legend => 'bottom',
         :title => 'Monthly Usage',
       }
     }

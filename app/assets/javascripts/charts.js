@@ -22,7 +22,10 @@ jQuery(function ($) {
             chart.draw(div.get(0));
 
             // hookup the orientationchange to redraw it
+            // orientationchange
             window.addEventListener('orientationchange', function () {
+              chart.setOption('width', div.width());
+              chart.setOption('height', div.height());
               chart.draw(div.get(0));
             });
           });
