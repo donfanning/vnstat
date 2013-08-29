@@ -1,4 +1,10 @@
 
+<div>
+  <legend>
+    <%= AVAILABLE_DEVICES[@device.to_sym] %>
+  </legend>
+</div>
+
 <div class="row-fluid usage">
   <div class="span4">
     <%= current_usage @vnstats[:oneline], @device %>
