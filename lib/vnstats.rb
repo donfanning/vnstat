@@ -1,6 +1,6 @@
 module Vnstats
-  WARNING_USAGE_GB = (ENV["WARNING_USAGE_GB"].nil? ? 80 : ENV["WARNING_USAGE_GB"].to_i)
-  CRITICAL_USAGE_GB = (ENV["CRITICAL_USAGE_GB"].nil? ? 95 : ENV["CRITICAL_USAGE_GB"].to_i)
+  WARNING_USAGE_GB = (APP_CONFIG[:warning_usage_gb].nil? ? 80 : APP_CONFIG[:warning_usage_gb].to_i)
+  CRITICAL_USAGE_GB = (APP_CONFIG[:critical_usage_gb].nil? ? 95 : APP_CONFIG[:critical_usage_gb].to_i)
 
   def fetch_vnstats (device)
     Rails.cache.fetch(device, :expires_in => 5.minutes) do 
@@ -28,7 +28,7 @@ module Vnstats
           when 'nick'
             vnstat[:nick] = f[1].strip
             # see if we have application config to supercede this
-            vnstat[:nick] = ENV[device] if ENV.has_key?(device)
+            vnstat[:nick] = APP_CONFIG[device] if APP_CONFIG.has_key?(device)
           end
         end
 
