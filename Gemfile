@@ -39,10 +39,12 @@ gem "font-awesome-sass"
 group :development do
   gem "better_errors"
   gem "binding_of_caller"
-  gem 'quiet_assets'                    # quieter logging
-  gem 'thin'                            # quieter log than webrick
-  gem "capistrano"                      # deployment
+  gem 'quiet_assets'                            # quieter logging
+  gem 'thin'                                    # quieter log than webrick
+  gem "capistrano", '~> 3.0', require: false    # deployment
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
 end
 
-gem "dalli"
+gem "dalli"                                     # memcache
 
