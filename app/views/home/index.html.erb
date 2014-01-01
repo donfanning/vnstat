@@ -1,4 +1,3 @@
-
 <div>
   <legend>
     <%= AVAILABLE_DEVICES[@device.to_sym] %>
@@ -21,7 +20,7 @@
   <% if AVAILABLE_DEVICES.size > 1 %>
     <div class="btn-group col-md-12">
       <% AVAILABLE_DEVICES.each do |k, v| %>
-        <%= link_to v, root_path(dev: k), class: "btn btn-mini btn-default" %>
+        <%= link_to v, root_path(dev: k), class: "btn btn-xs btn-default" %>
       <% end %>
     </div>
   <% end %>
