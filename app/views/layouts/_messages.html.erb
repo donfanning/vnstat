@@ -1,11 +1,11 @@
 <% flash.each do |name, msg| %>
   <% if msg.is_a?(String) %>
-    <div class="alert alert-<%= (name == :notice ? "success" : (name == :warning ? "warning" : "error")) %>">
+    <div class="alert alert-<%= (name == :notice ? "success" : (name == :warning ? "warning" : "danger")) %>">
       <a class="close" data-dismiss="alert">&#215;</a>
       <%= content_tag :div, msg, :id => "flash_#{name}" %>
     </div>
   <% elsif msg.is_a?(Array) %>
-    <div class="alert alert-<%= (name == :notice ? "success" : (name == :warning ? "warning" : "error")) %>">
+    <div class="alert alert-<%= (name == :notice ? "success" : (name == :warning ? "warning" : "danger")) %>">
       <a class="close" data-dismiss="alert">&#215;</a>
       <% msg.each do |v| %>
         <%= content_tag :div, v.to_s, :id => "flash_#{name}" %>

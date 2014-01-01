@@ -10,10 +10,11 @@ class GraphController < ApplicationController
   def daily_use
     raw_data = @vnstats[:days]
     graph_cols = [['Day', 'Received', 'Transmitted']]
+    graph_data = []
     graph_data = raw_data.collect do |f|
       df = Time.at(f[2].to_i).strftime('%m/%e').sub(' ', '').sub(/^0/, '')
       [ "#{df}", f[3].to_i, f[4].to_i ]
-    end
+    end if !raw_data.nil?
 
     render :json => {
       :type => 'AreaChart',
@@ -31,10 +32,11 @@ class GraphController < ApplicationController
   def monthly_use
     raw_data = @vnstats[:months]
     graph_cols = [['Month', 'Received', 'Transmitted']]
+    graph_data = []
     graph_data = raw_data.collect do |f|
       df = Time.at(f[2].to_i).strftime("%b '%y")
       [ "#{df}", f[3].to_i / 1024.0, f[4].to_i / 1024.0 ]
-    end
+    end if !raw_data.nil?
 
     render :json => {
       :type => 'AreaChart',

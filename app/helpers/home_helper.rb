@@ -43,7 +43,7 @@ module HomeHelper
         <td>#{number_with_delimiter(d[4].to_i, delimiter: ',')}</td>
         <td>#{number_with_delimiter(d[3].to_i + d[4].to_i, delimiter: ',')}</td>
       </tr>"
-    end
+    end if !history.nil?
     results << "</tbody></table>"
     results.join("").html_safe
   end
@@ -92,7 +92,7 @@ module HomeHelper
         <td>#{number_with_precision(d[4].to_i / 1024.0, precision: 2)}</td>
         <td>#{number_with_precision((d[3].to_i + d[4].to_i) / 1024.0, precision: 2)}</td>
       </tr>"
-    end
+    end if !history.nil?
     results << "</tbody></table>"
     results.join("").html_safe
   end

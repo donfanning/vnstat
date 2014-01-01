@@ -5,21 +5,21 @@
   </legend>
 </div>
 
-<div class="row-fluid usage">
-  <div class="span4">
+<div class="row usage">
+  <div class="col-md-4">
     <%= current_usage @vnstats[:oneline], @device %>
   </div>
-  <div class="span4">
+  <div class="col-md-4">
     <%= days_usage @vnstats[:oneline] %>
   </div>
-  <div class="span4">
+  <div class="col-md-4">
     <%= estimated_usage @vnstats %>
   </div>
 </div>
 
-<div class="row-fluid devices">
+<div class="row devices">
   <% if AVAILABLE_DEVICES.size > 1 %>
-    <div class="btn-group span12">
+    <div class="btn-group col-md-12">
       <% AVAILABLE_DEVICES.each do |k, v| %>
         <%= link_to v, root_path(dev: k), class: "btn btn-mini btn-default" %>
       <% end %>
@@ -28,28 +28,37 @@
 </div>
 <div class="clearfix"></div>
 
-<!-- daily use graph -->
-<div class="row-fluid">
-  <div class="well">
-    <%= chart_tag 'daily_use', { dev: @device } %>
+<% if !@vnstats[:days].nil? %>
+  <!-- daily use graph -->
+  <div class="row">
+    <div class="well">
+      <%= chart_tag 'daily_use', { dev: @device } %>
+    </div>
   </div>
-</div>
+<% end %>
 
-<!-- monthly use graph -->
-<div class="row-fluid">
-  <div class="well">
-    <%= chart_tag 'monthly_use', { dev: @device } %>
+<% if !@vnstats[:months].nil? %>
+  <!-- monthly use graph -->
+  <div class="row">
+    <div class="well">
+      <%= chart_tag 'monthly_use', { dev: @device } %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <!-- details -->
-<div class="row-fluid history">
-  <div class="span12 center">
-    <%= daily_history @vnstats[:days] %>
+<% if !@vnstats[:days].nil? %>
+  <div class="row history">
+    <div class="col-md-12 center">
+      <%= daily_history @vnstats[:days] %>
+    </div>
   </div>
-</div>
-<div class="row-fluid history">
-  <div class="span12 center">
-    <%= monthly_history @vnstats[:months] %>
+<% end %>
+
+<% if !@vnstats[:months].nil? %>
+  <div class="row history">
+    <div class="col-md-12 center">
+      <%= monthly_history @vnstats[:months] %>
+    </div>
   </div>
-</div>
+<% end %>

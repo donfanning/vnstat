@@ -3,7 +3,6 @@
 <head>
   <title>vnstat</title>
   <%= stylesheet_link_tag "application", :media => "all" %>
-  <%= stylesheet_link_tag "bootstrap-responsive", :media => "screen" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 
@@ -12,8 +11,8 @@
 </head>
   <body class="<%= controller_name %> <%= action_name %>">
     <div id="main" role="main">
-      <div class="container-fluid">
-        <div id="flash-msgs" class="row-fluid">
+      <div class="container">
+        <div id="flash-msgs" class="row">
             <%= render 'layouts/messages' %>
         </div>
         <%= yield %>

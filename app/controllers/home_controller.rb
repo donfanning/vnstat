@@ -1,6 +1,9 @@
 class HomeController < ApplicationController
   def index
   	@device = params[:dev]
+    if @device.nil?
+      @device = get_first_device
+    end
   	@device ||= "eth0"
     @vnstats = fetch_vnstats(@device)
     if @vnstats.empty?
