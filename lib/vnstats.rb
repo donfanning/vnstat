@@ -4,7 +4,7 @@ module Vnstats
 
   def fetch_vnstats (device)
     Rails.cache.fetch(device, :expires_in => 5.minutes) do 
-      Rails.logger.debug('running vnstat')
+      Rails.logger.debug("running vnstat #{device}")
       vnstat = {}
 
       vnstat_dump = `vnstat -i #{device} --dumpdb`
@@ -48,5 +48,13 @@ module Vnstats
       end
       vnstat
     end
+  end
+
+  def get_first_device
+    begin
+      f = `vnstat --oneline`.lines.first.split(';')[1]
+    rescue
+    end
+    f
   end
 end
