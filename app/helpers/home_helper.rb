@@ -6,7 +6,7 @@ module HomeHelper
     path = graph_path(action, params)
     content_tag(:div, :'data-chart' => path, :style => "height: #{params[:height]}px;") do
       content_tag(:div, :class => "center") do
-        content_tag(:i, :class => "icon-spinner icon-spin icon-3x muted") { }
+        content_tag(:i, :class => "fa fa-spinner fa-spin fa-3x muted") { }
       end
     end
   end
