@@ -39,7 +39,7 @@ module Vnstats
         estimated_monthly_usage /= 1024 if vnstat[:estimated_monthly_usage].include? 'MiB'
         case 
         when estimated_monthly_usage > CRITICAL_USAGE_GB
-          vnstat[:estimated_monthly_status] = 'error'
+          vnstat[:estimated_monthly_status] = 'danger'
         when estimated_monthly_usage > WARNING_USAGE_GB
           vnstat[:estimated_monthly_status] = 'warn'
         else
