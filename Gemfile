@@ -44,5 +44,5 @@ group :development do
   gem "capistrano"                      # deployment
 end
 
-gem "memcache-client"
+gem "dalli"
 
