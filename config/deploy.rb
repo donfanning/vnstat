@@ -1,55 +1,81 @@
-# heavily influenced by "a capistrano rails guide" by jonathan rochkind"
-# https://github.com/capistrano/capistrano/wiki/2.x-Multistage-Extension
-
-set :stage, %w(sirius sbc)
 set :default_stage, "sirius"
+set :user, "deploy"
 
-require 'capistrano/ext/multistage'
-
+set :ssh_options, {
+# verbose: :debug,
+  user: fetch(:user)
+}
 set :application, "vnstat"
-set :repository,  "https://github.com/mfrederickson/vnstat.git"
-set :asset_env, "#{asset_env} RAILS_RELATIVE_URL_ROOT=/#{application}"
+set :repo_url, "https://github.com/mfrederickson/vnstat.git"
 
-#set :user, "www-data"
-#set :group, "www-data"
+set :rails_relative_url_root, "/#{fetch(:application)}"
 
-set :use_sudo, false
+# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
-# set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
+# set :deploy_to, '/var/www/my_app'
+# set :scm, :git
 
-task :uname do
-  run "uname -a"
-end
+# set :format, :pretty
+set :log_level, :debug
+set :pty, true
 
-default_run_options[:pty] = true
+# set :linked_files, %w{config/database.yml}
+# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
-# if you want to clean up old releases on each deploy uncomment this:
-after "deploy:restart", "deploy:cleanup"
-after "deploy:assets:symlink", "custom:config"
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+# set :keep_releases, 5
 
-# move migrate to production one since we dont want to run this when updating the kiosks
-#after "deploy:update_code", "deploy:migrate"
+#after "deploy:assets:symlink", "custom:config"
 
-# if you're still using the script/reaper helper you will need
-# these http://github.com/rails/irs_process_scripts
 
-# If you are using Passenger mod_rails uncomment this:
 namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      execute :touch, release_path.join('tmp/restart.txt')
+    end
+  end
+
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      # within release_path do
+      #   execute :rake, 'cache:clear'
+      # end
+    end
+  end
+
+  after :finishing, 'deploy:cleanup'
+
+  namespace :assets do
+    task :precompile do
+      on roles :web do
+        within release_path do
+          with rails_env: fetch(:rails_env), rails_relative_url_root: fetch(:rails_relative_url_root) do
+            execute :rake, "assets:clobber"
+            execute :rake, "assets:precompile"
+          end
+        end
+      end
+    end
   end
 end
 
 # preserve the nondeployed app config
 namespace :custom do
-  task :config, :roles => :app do
-    run <<-END
-      ln -nfs #{shared_path}/system/application.yml #{release_path}/config/application.yml
-    END
+  desc "copy application.yml to shared_path"
+  task :setup do
+    on roles(:app) do
+      upload! "config/application.yml", "#{shared_path}/application.yml", via: :scp
+    end
+  end
+
+  task :config do
+    on roles(:app) do
+      run <<-END
+        ln -nfs #{shared_path}/application.yml #{release_path}/config/application.yml
+      END
+    end
   end
 end
-
-require "bundler/capistrano"

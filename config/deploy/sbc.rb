@@ -1,4 +1,5 @@
 # for updating the developer's staging server
+set :stage, :sbc
 
 role :web, "office.soldotnabiblechapel.org"                     # Your HTTP server, Apache/etc
 role :app, "office.soldotnabiblechapel.org"                     # This may be the same as your `Web` server

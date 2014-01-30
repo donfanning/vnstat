@@ -39,6 +39,15 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (>= 0.0.23)
+    capistrano-bundler (1.1.1)
+      capistrano (~> 3.0)
+      sshkit (>= 1.2.0)
+    capistrano-rails (1.1.0)
+      capistrano (>= 3.0.0)
+      capistrano-bundler (>= 1.0.0)
+    capistrano-rvm (0.1.1)
+      capistrano (~> 3.0)
+      sshkit (~> 1.2)
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -140,7 +149,10 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass
-  capistrano
+  capistrano (~> 3.0)
+  capistrano-bundler
+  capistrano-rails
+  capistrano-rvm
   coffee-rails
   dalli
   font-awesome-sass
