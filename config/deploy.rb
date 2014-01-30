@@ -2,7 +2,7 @@ set :default_stage, "sirius"
 set :user, "deploy"
 
 set :ssh_options, {
-# verbose: :debug,
+  #verbose: :debug,
   user: fetch(:user)
 }
 set :application, "vnstat"
