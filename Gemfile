@@ -44,6 +44,7 @@ group :development do
   gem "capistrano", '~> 3.0', require: false    # deployment
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
+  gem 'capistrano-rvm'
 end
 
 gem "dalli"                                     # memcache
