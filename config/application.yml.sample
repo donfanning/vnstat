@@ -2,5 +2,7 @@
 eth0: network
 
 # usage levels for alert colors
-warning_usage_gb: 85
-critical_usage_gb: 95
+warning_usage_gb: "85"
+critical_usage_gb: "95"
+
+secret_key_base: blahblahblahforproduction
