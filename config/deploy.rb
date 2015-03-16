@@ -19,6 +19,9 @@ set :rails_relative_url_root, "/#{fetch(:application)}"
 set :log_level, :info
 set :pty, true
 
+set :linked_files, %w{config/application.yml}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+
 # set :linked_files, %w{config/database.yml}
 # set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
