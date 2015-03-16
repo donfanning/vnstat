@@ -30,7 +30,7 @@
 <% if !@vnstats[:days].nil? %>
   <!-- daily use graph -->
   <div class="row">
-    <div class="well">
+    <div class="col-sm-12">
       <%= chart_tag 'daily_use', { dev: @device } %>
     </div>
   </div>
@@ -39,25 +39,23 @@
 <% if !@vnstats[:months].nil? %>
   <!-- monthly use graph -->
   <div class="row">
-    <div class="well">
+    <div class="col-sm-12">
       <%= chart_tag 'monthly_use', { dev: @device } %>
     </div>
   </div>
 <% end %>
 
 <!-- details -->
-<% if !@vnstats[:days].nil? %>
-  <div class="row history">
-    <div class="col-md-12 center">
-      <%= daily_history @vnstats[:days] %>
-    </div>
-  </div>
-<% end %>
+<div class="row history">
+  <% if !@vnstats[:days].nil? %>
+      <div class="col-sm-6 center">
+        <%= daily_history @vnstats[:days] %>
+      </div>
+  <% end %>
 
-<% if !@vnstats[:months].nil? %>
-  <div class="row history">
-    <div class="col-md-12 center">
-      <%= monthly_history @vnstats[:months] %>
-    </div>
-  </div>
-<% end %>
+  <% if !@vnstats[:months].nil? %>
+      <div class="col-sm-6 center">
+        <%= monthly_history @vnstats[:months] %>
+      </div>
+  <% end %>
+</div>
