@@ -6,10 +6,10 @@
 
 <div class="row usage">
   <div class="col-xs-4">
-    <%= current_usage @vnstats[:oneline], @device %>
+    <%= days_usage @vnstats[:oneline] %>
   </div>
   <div class="col-xs-4">
-    <%= days_usage @vnstats[:oneline] %>
+    <%= current_usage @vnstats[:oneline], @device %>
   </div>
   <div class="col-xs-4">
     <%= estimated_usage @vnstats %>
