@@ -40,8 +40,10 @@ module Vnstats
 
         # cycle usage
         # comment out old method above and use billing_cycle_day
+        day_start = 1
+        day_start = ENV["billing_cycle_start"].to_i unless ENV["billing_cycle_start"].blank?
         days_in_month = Date.today.end_of_month.day
-        since = Date.new(Date.today.year, Date.today.month, ENV["billing_cycle_start"].to_i)
+        since = Date.new(Date.today.year, Date.today.month, day_start)
         if Date.today.day < since.day 
           # we are in the prior cycle
           since = since - 1.month
