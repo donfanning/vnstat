@@ -9,7 +9,7 @@
     <%= days_usage @vnstats[:oneline] %>
   </div>
   <div class="col-xs-4">
-    <%= current_usage @vnstats[:oneline], @device %>
+    <%= current_usage @vnstats[:cycle_usage].to_f.round(0) %>
   </div>
   <div class="col-xs-4">
     <%= estimated_usage @vnstats %>
@@ -50,6 +50,7 @@
   <% if !@vnstats[:days].nil? %>
       <div class="col-sm-6 center">
         <%= daily_history @vnstats[:days] %>
+        <p>Cycle Begin Date = <%= @vnstats[:cycle_start] %></p>
       </div>
   <% end %>
 

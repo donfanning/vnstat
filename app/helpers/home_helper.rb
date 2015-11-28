@@ -11,13 +11,12 @@ module HomeHelper
     end
   end
 
-  def current_usage oneline, device
-    if !oneline.nil?
-      amount_parts = oneline.split(';')[10].split(' ')
+  def current_usage amt
+    if !amt.nil?
       content_tag :div, :class => "alert alert-warning center" do
         [
-          "<h2>#{amount_parts[0]} <small>#{amount_parts[1]}</small></h2>".html_safe, 
-          "<p><small>approximate usage to date</small></p>"
+          "<h2>#{amt} <small>GiB</small></h2>".html_safe, 
+          "<p><small>approximate cycle usage</small></p>"
         ].join("").html_safe
       end
     end
@@ -53,7 +52,7 @@ module HomeHelper
       amount_parts = oneline.split(';')[5].split(' ')
       content_tag :div, :class => "alert alert-info days-usage center" do
         [
-          "<h2>#{amount_parts[0]} <small>#{amount_parts[1]}</small></h2>".html_safe, 
+          "<h2>#{amount_parts[0].to_f.round(0)} <small>#{amount_parts[1]}</small></h2>".html_safe, 
           "<p><small>approximate usage today</small></p>"
         ].join("").html_safe
       end
@@ -62,11 +61,11 @@ module HomeHelper
 
   def estimated_usage vnstats
     if !vnstats.empty?
-      amount_parts = vnstats[:estimated_monthly_usage].split(' ')
+      #amount_parts = vnstats[:estimated_monthly_usage].split(' ')
       content_tag :div, :class => "alert alert-#{vnstats[:estimated_monthly_status]} center" do
         [
-          "<h2>#{amount_parts[0]} <small>#{amount_parts[1]}</small></h2>".html_safe, 
-          "<p><small>estimated end of month usage</small></p>"
+          "<h2>#{vnstats[:estimated_monthly_usage].to_f.round(0)} <small>GiB</small></h2>".html_safe, 
+          "<p><small>estimated end of cycle usage</small></p>"
         ].join("").html_safe
       end
     end

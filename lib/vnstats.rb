@@ -33,10 +33,35 @@ module Vnstats
         end
 
         # determine the estimated monthly usage and its status class
-        vnstat[:estimated_monthly_usage] = vnstat[:raw_months].lines.last.split('|')[2]
-        estimated_monthly_usage = vnstat[:estimated_monthly_usage].to_f
-        estimated_monthly_usage /= (1024 * 1024) if vnstat[:estimated_monthly_usage].include? 'KiB'
-        estimated_monthly_usage /= 1024 if vnstat[:estimated_monthly_usage].include? 'MiB'
+        # vnstat[:estimated_monthly_usage] = vnstat[:raw_months].lines.last.split('|')[2]
+        # estimated_monthly_usage = vnstat[:estimated_monthly_usage].to_f
+        # estimated_monthly_usage /= (1024 * 1024) if vnstat[:estimated_monthly_usage].include? 'KiB'
+        # estimated_monthly_usage /= 1024 if vnstat[:estimated_monthly_usage].include? 'MiB'
+
+        # cycle usage
+        # comment out old method above and use billing_cycle_day
+        days_in_month = Date.today.end_of_month.day
+        since = Date.new(Date.today.year, Date.today.month, ENV["billing_cycle_start"].to_i)
+        if Date.today.day < since.day 
+          # we are in the prior cycle
+          since = since - 1.month
+          days_in_month = since.end_of_month.day
+        end
+Rails.logger.debug("since = #{since}")
+        vnstat[:cycle_start] = since
+        cycle_usage = 0
+        days = 0
+        vnstat[:days].collect do |d|
+          if Time.at(d[2].to_i) >= since
+            days += 1
+            cycle_usage += (d[3].to_i + d[4].to_i)
+          end
+        end
+        cycle_usage /= 1024.0
+        vnstat[:cycle_usage] = cycle_usage.to_s
+
+        estimated_monthly_usage = (cycle_usage / days * days_in_month)
+        vnstat[:estimated_monthly_usage] = estimated_monthly_usage.to_s
         case 
         when estimated_monthly_usage > CRITICAL_USAGE_GB
           vnstat[:estimated_monthly_status] = 'danger'
